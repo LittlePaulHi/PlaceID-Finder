@@ -28,7 +28,7 @@ from PlaceIDFinder import Finder
 id_finder = Finder('Your API key')
 ```
 
-設定radar search的搜尋半徑
+設定 radar search 的搜尋半徑
 ```python
 id_finder.setRadius(800)
 ```
