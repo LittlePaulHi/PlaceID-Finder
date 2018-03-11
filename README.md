@@ -12,11 +12,25 @@
 |googlemaps|2.5.1|
 
 ## Usage
-先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python#installation)
+先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python)
 
 ```python
 pip install googlemaps
 ```
 
-再來
+再來 import Finder class, 就能開始設定搜尋內容了
+```python
+from PlaceIDFinder import Finder
+```
+
+插入您的 Google Maps API key
+```python
+id_finder = Finder('Your API key')
+```
+
+設定radar search的搜尋半徑
+```python
+id_finder.setRadius(800)
+```
+
 
