@@ -12,9 +12,11 @@
 |googlemaps|2.5.1|
 
 ## Usage
-第一步 安裝 googlempas from https://github.com/googlemaps/google-maps-services-python#installation
+先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python#installation)
 
 ```python
 pip install googlemaps
 ```
+
+再來
 
