@@ -38,6 +38,9 @@ class Finder:
 
     def getPlaceIDType(self):
         return self.place_type
+    
+    def getPlaceIDList(self):
+        return self.place_id_str.split('\n')
 
     def check(self):
         if self.radius <= 0 or self.cord_moving <= 0:
