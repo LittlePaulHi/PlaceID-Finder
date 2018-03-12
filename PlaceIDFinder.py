@@ -51,11 +51,11 @@ class Finder:
             self._coord_moving = disp
 
     @property
-    def southwest_coord(self):
+    def southwest_location(self):
         return (self.southwest_lng, self.southwest_lat)
 
-    @southwest_coord.setter
-    def southwest_coord(self, location):
+    @southwest_location.setter
+    def southwest_location(self, location):
         if isinstance(location, tuple):
             self.start_lng = location[0]
             (self.southwest_lng, self.southwest_lat) = location
@@ -63,11 +63,11 @@ class Finder:
             raise TypeError("Location type must be tuple")
 
     @property
-    def northeast_coord(self):
+    def northeast_location(self):
         return (self.northeast_lng, self.northeast_lat)
 
-    @northeast_coord.setter
-    def northeast_coord(self, location):
+    @northeast_location.setter
+    def northeast_location(self, location):
         if isinstance(location, tuple):
             (self.northeast_lng, self.northeast_lat) = location
         else:
