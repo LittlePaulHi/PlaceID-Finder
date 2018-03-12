@@ -23,7 +23,8 @@ pip install googlemaps
 from PlaceIDFinder import Finder
 ```
 
-插入您的 Google Maps API key, 並設定 radius, displacement, start_location(西南座標), end_location(東北座標) #正方形對角走法
+插入您的 Google Maps API key, 並設定 radius, displacement,</br>
+start_location(西南座標), end_location(東北座標) #正方形對角走法
 ```python
 id_finder = Finder(key='Your API key', radius=radar_search_radius, disp=coord_move_disp, type=place_type,
                    southwest_location=(start_lng, start_lat), northeast_location=(end_lng, end_lat))
