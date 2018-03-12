@@ -2,69 +2,118 @@ import googlemaps
 
 
 class Finder:
-    def __init__(self, user_key):
-        self.gmaps = googlemaps.Client(key=user_key)
-        self.radius = -1
-        self.cord_moving = -1  # distance for coordinate to move
-        self.start_lng = -1
-        self.southwest_lng = -1
-        self.southwest_lat = -1
-        self.northeast_lng = -1
-        self.northeast_lat = -1
+    def __init__(self, key=None, radius=None, disp=None, type=None,
+                 southwest_location=None, northeast_location=None):
+
+        if not key:
+            raise ValueError("API key is required")
+
+        # start location(coordinate)
+        if southwest_location and isinstance(southwest_location, tuple):
+            self.start_lng = southwest_location[0]
+            (self.southwest_lng, self.southwest_lat) = southwest_location
+        else:
+            self.start_lng = self.southwest_lng = self.southwest_lat = None
+
+        # end location(coordinate)
+        if northeast_location and isinstance(northeast_location, tuple):
+            (self.northeast_lng, self.northeast_lat) = northeast_location
+        else:
+            self.northeast_lng = self.northeast_lat = None
+
+        self.gmaps = googlemaps.Client(key=key)
+        self._radius = radius  # radius for radar search
+        self._coord_moving = disp  # displacement for coordinate to move
+        self._place_type = type
         self.place_id_count = 0
         self.place_id_str = ""
-        self.place_type = ""
 
-    def setRadius(self, _radius):
-        self.radius = _radius
+    @property
+    def radius(self):
+        return self._radius
 
-    def setCoordinateMoveDistance(self, distance):
-        self.cord_moving = distance
+    @radius.setter
+    def radius(self, radius):
+        if isinstance(radius, str):
+            self._radius = int(radius)
+        else:
+            self._radius = radius
 
-    def setSouthwestPosition(self, lng, lat):
-        self.start_lng = lng
-        self.southwest_lng = lng
-        self.southwest_lat = lat
+    @property
+    def displacement(self):
+        return self._coord_moving
 
-    def setNortheastPosition(self, lng, lat):
-        self.northeast_lng = lng
-        self.northeast_lat = lat
+    @displacement.setter
+    def displacement(self, disp):
+        if isinstance(disp, str):
+            self._coord_moving = float(disp)
+        else:
+            self._coord_moving = disp
 
-    def setPlaceType(self, type):
-        self.place_type = type
+    @property
+    def southwest_coord(self):
+        return (self.southwest_lng, self.southwest_lat)
 
-    def getPlaceIDCount(self):
+    @southwest_coord.setter
+    def southwest_coord(self, location):
+        if isinstance(location, tuple):
+            self.start_lng = location[0]
+            (self.southwest_lng, self.southwest_lat) = location
+        else:
+            raise TypeError("Location type must be tuple")
+
+    @property
+    def northeast_coord(self):
+        return (self.northeast_lng, self.northeast_lat)
+
+    @northeast_coord.setter
+    def northeast_coord(self, location):
+        if isinstance(location, tuple):
+            (self.northeast_lng, self.northeast_lat) = location
+        else:
+            raise TypeError("Location type must be tuple")
+
+    @property
+    def place_type(self):
+        return self._place_type
+
+    @place_type.setter
+    def place_type(self, type):
+        if isinstance(type, str):
+            self._place_type = type
+        else:
+            raise TypeError("place type must be string")
+
+    def id_count(self):
         return self.place_id_count
 
-    def getPlaceIDType(self):
-        return self.place_type
-    
-    def getPlaceIDList(self):
+    def id_list(self):
         return self.place_id_str.split('\n')
 
     def check(self):
-        if self.radius <= 0 or self.cord_moving <= 0:
-            print("error : you didn't set radius or coordinate move distance")
-            return False
+        if not (self._radius and self._coord_moving):
+            raise ValueError("You didn't set radius or "
+                             "coordinate move displacement")
+        elif not (self.southwest_lng and self.southwest_lat):
+            raise ValueError("You didn't set southwest location")
+        elif not (self.northeast_lng and self.northeast_lat):
+            raise ValueError("You didn't set northeast location")
         elif (self.southwest_lng > self.northeast_lng) or \
              (self.southwest_lat > self.northeast_lat):
-            print("error : There’s an error in your coordinate set")
-            return False
-        elif not self.place_type:
-            print("error : you didn't set place type")
-            return False
-        else:
-            return True
+            raise ValueError("There’s an error in your coordinate sets")
+        elif not self._place_type:
+            raise ValueError("You didn't set the place type")
 
     def run(self):
+        self.check()
         tmp_count = 0
         tmp_lng = self.southwest_lng
         tmp_lat = self.southwest_lat
-        checker = self.check()
-        while(checker):
+
+        while(True):
             radar_result = self.gmaps.places_radar((tmp_lng, tmp_lat),
-                                                   self.radius,
-                                                   type=self.place_type)
+                                                   self._radius,
+                                                   type=self._place_type)
 
             # 判斷results裡有無東西
             if len(radar_result['results']) > 0:
@@ -78,16 +127,16 @@ class Finder:
 
             if tmp_lat < self.northeast_lat:  # 判斷是否超出 最東 緯度
                 if tmp_lng < self.northeast_lng:  # 判斷是否超出 最北 經度
-                    tmp_lng = tmp_lng + self.cord_moving
+                    tmp_lng = tmp_lng + self._coord_moving
                 else:  # tmp_lng > northeast_lng 超出 最北 經度
                     tmp_lng = self.start_lng  # 恢復起始的 經度(初始化)
-                    tmp_lat = tmp_lat + self.cord_moving
+                    tmp_lat = tmp_lat + self._coord_moving
             else:  # tmp_lat >= northeast_lat 超出 最東 緯度
                 self.place_id_count = tmp_count
                 print('Search END')
-                checker = False  # 結束search
+                break  # 結束search
 
-    def writeToTxt(self, file_name):
+    def write_to_txt(self, file_name):
         fileObject = open('./'+file_name+'.txt', 'w')
         fileObject.write(self.place_id_str)
         fileObject.close()
