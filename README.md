@@ -12,7 +12,7 @@
 |googlemaps|2.5.1|
 
 ## Usage & Example
-先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python)
+先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python), 並下載 PlaceIDFinder.py
 
 ```python
 pip install googlemaps
