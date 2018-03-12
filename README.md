@@ -45,7 +45,7 @@ _disp = id_finder.displacement
 ```python
 id_finder.southwest_location = (22.669266, 120.341372)
 _start_loc = id_finder.southwest_location  # return type is tuple
-</br>
+
 id_finder.northeast_location = (24.723396, 125.018303)
 _end_loc = id_finder.northeast_location  # return type is tuple
 ```
