@@ -11,7 +11,7 @@
 |----|----|
 |googlemaps|2.5.1|
 
-## Usage
+## Usage % Example
 先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python)
 
 ```python
@@ -23,7 +23,7 @@ pip install googlemaps
 from PlaceIDFinder import Finder
 ```
 
-插入您的 Google Maps API key, 並設定 radius, displacement,
+插入您的 Google Maps API key, 並設定 radius, displacement,＜/br＞
 start_location(西南座標), end_location(東北座標) #正方形走法
 ```python
 id_finder = Finder(key='Your API key', radius=radar_search_radius, disp=coord_move_disp, type=place_type,
