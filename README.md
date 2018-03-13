@@ -79,6 +79,7 @@ id_finder.write_to_txt('file_name')
 ## Example
 以簡單例子作為範例, 搜尋區域以正方形方式下去搜尋 左下角(西南座標 A點)為起點, 右上角(東北座標 B點)為終點 </br>
 ![image](https://github.com/a2323269/PlaceID-Finder/blob/master/readme_pic/sample_map.png)
+![image](https://github.com/a2323269/PlaceID-Finder/blob/master/readme_pic/sample_map-min.png)
 
 ```python
 
