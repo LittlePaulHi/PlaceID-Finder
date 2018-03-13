@@ -77,11 +77,27 @@ id_finder.write_to_txt('file_name')
 ```
 
 ## Example
-以簡單例子作為範例, 搜尋區域以正方形方式下去搜尋 左下角(西南座標 A點)為起點, 右上角(東北座標 B點)為終點 </br>
-![image](https://github.com/a2323269/PlaceID-Finder/blob/master/readme_pic/sample_map.png)
+以簡單例子作為範例, 搜尋區域以正方形方式下去搜尋 左下角(A點)為起點, 右上角(B點)為終點, 以下圖為例 </br>
+
 <img src="https://github.com/a2323269/PlaceID-Finder/blob/master/readme_pic/sample_map.png" width="50%" height="50%">
 
 ```python
+
+from PlaceIDFinder import Finder
+import os
+
+id_finder = Finder(key='Your API key', radius=800, disp=0.06, type='restaurant',
+                   southwest_location=(25.011426, 121.457151), northeast_location = (25.221561, 121.489882))
+
+id_finder.check()  # 檢查輸入資料
+
+_count, _id_list = id_finder.run()
+
+id_list = id_finder.id_list()
+
+id_finder.write_to_txt('test_placeid')
+
+os.system('pause')
 
 ```
 
