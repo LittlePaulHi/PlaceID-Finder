@@ -11,7 +11,7 @@
 |----|----|
 |googlemaps|2.5.1|
 
-## Usage & Example
+## Usage
 先安裝 [googlempas](https://github.com/googlemaps/google-maps-services-python), 並下載 PlaceIDFinder.py
 
 ```python
@@ -49,5 +49,37 @@ _start_loc = id_finder.southwest_location  # return type is tuple
 
 id_finder.northeast_location = (24.723396, 125.018303)
 _end_loc = id_finder.northeast_location  # return type is tuple
+```
+
+修改&取得 搜尋店家類型(place_type)
+```python
+id_finder.place_type = 'restaurant'
+_place_type = id_finder.place_type
+```
+
+執行搜尋並取得 place id總數(id_count), place id list(id_list)
+```python
+_id_count, _id_list = id_finder.run()
+
+# 也可以在搜尋(run)完後, 直接取得
+_id_count = id_finder.id_count()
+_id_list = id_finder.id_list()
+```
+
+檢查資料有無輸入 或兩座標的輸入有無錯誤
+```python
+id_finder.check()
+```
+
+將 id_list 寫成txt儲存
+```python
+id_finder.write_to_txt('file_name')
+```
+
+## Example
+以簡單例子作為範例, 搜尋區域以正方形方式下去搜尋 左下角(西南座標 A點)為起點, 右上角(東北座標 B點)為終點
+
+```python
+
 ```
 
