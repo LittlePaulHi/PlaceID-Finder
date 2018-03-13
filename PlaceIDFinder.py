@@ -134,6 +134,7 @@ class Finder:
             else:  # tmp_lat >= northeast_lat 超出 最東 緯度
                 self.place_id_count = tmp_count
                 print('Search END')
+                return self.place_id_count, self.place_id_str.split('\n')
                 break  # 結束search
 
     def write_to_txt(self, file_name):
