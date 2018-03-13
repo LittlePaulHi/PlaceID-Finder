@@ -93,8 +93,6 @@ id_finder.check()  # 檢查輸入資料
 
 _count, _id_list = id_finder.run()
 
-id_list = id_finder.id_list()
-
 id_finder.write_to_txt('test_placeid')
 
 os.system('pause')
