@@ -30,19 +30,19 @@ id_finder = Finder(key='Your API key', radius=radar_search_radius, disp=coord_mo
                    southwest_location=(start_lng, start_lat), northeast_location=(end_lng, end_lat))
 ```
 
-修改&取得 radar search 的搜尋半徑(radius)
+設定&取得 radar search 的搜尋半徑(radius)
 ```python
 id_finder.radius = 700
 _radius = id_finder.radius
 ```
 
-修改&取得 座標移動距離(displacement)
+設定&取得 座標移動距離(displacement)
 ```python
 id_finder.displacement = 0.06
 _disp = id_finder.displacement
 ```
 
-修改&取得 起點座標(southwest_location) 終點座標(northeast_location)
+設定&取得 起點座標(southwest_location), 終點座標(northeast_location)
 ```python
 id_finder.southwest_location = (22.669266, 120.341372)
 _start_loc = id_finder.southwest_location  # return type is tuple
@@ -51,13 +51,13 @@ id_finder.northeast_location = (24.723396, 125.018303)
 _end_loc = id_finder.northeast_location  # return type is tuple
 ```
 
-修改&取得 搜尋店家類型(place_type)
+設定&取得 搜尋店家類型(place_type)
 ```python
 id_finder.place_type = 'restaurant'
 _place_type = id_finder.place_type
 ```
 
-執行搜尋並取得 place id總數(id_count), place id list(id_list)
+執行搜尋並取得 place id總數(id_count), place id的list(id_list)
 ```python
 _id_count, _id_list = id_finder.run()
 
@@ -77,7 +77,7 @@ id_finder.write_to_txt('file_name')
 ```
 
 ## Example
-以簡單例子作為範例, 搜尋區域以正方形方式下去搜尋 左下角(A點)為起點, 右上角(B點)為終點, 以下圖為例 </br>
+以簡單程式來作為範例, 搜尋區域以正方形方式下去搜尋 左下角(A點)為起點, 右上角(B點)為終點, 以下圖為例 </br>
 
 <img src="https://github.com/a2323269/PlaceID-Finder/blob/master/readme_pic/sample_map.png" width="50%" height="50%">
 
@@ -91,9 +91,9 @@ id_finder = Finder(key='Your API key', radius=800, disp=0.06, type='restaurant',
 
 id_finder.check()  # 檢查輸入資料
 
-_count, _id_list = id_finder.run()
+_id_count, _id_list = id_finder.run()  # 取得place id數 跟 list
 
-id_finder.write_to_txt('test_placeid')
+id_finder.write_to_txt('test_placeid')  # 將所有place id寫至test_placeid.txt
 
 os.system('pause')
 
