@@ -2,7 +2,8 @@ import googlemaps
 
 
 class Finder:
-    def __init__(self, key=None, radius=None, disp=None, type=None,
+    def __init__(self, key=None,
+                 radius=None, disp=None, type=None,
                  southwest_location=None, northeast_location=None):
 
         if not key:
@@ -110,10 +111,9 @@ class Finder:
         tmp_lng = self.southwest_lng
         tmp_lat = self.southwest_lat
 
-        while(True):
-            radar_result = self.gmaps.places_radar((tmp_lng, tmp_lat),
-                                                   self._radius,
-                                                   type=self._place_type)
+        while (True):
+            radar_result = self.gmaps.places_radar(
+                (tmp_lng, tmp_lat), self._radius, type=self._place_type)
 
             # 判斷results裡有無東西
             if len(radar_result['results']) > 0:
@@ -121,9 +121,8 @@ class Finder:
                     if self.place_id_str.find(place['place_id']) == -1:  # 無重複
                         self.place_id_str += place['place_id'] + '\n'
                         tmp_count = tmp_count + 1
-                        print('(' + str(tmp_lng) + ', ' +
-                              str(tmp_lat) + '), PlaceID count=' +
-                              str(tmp_count))
+                        print('(' + str(tmp_lng) + ', ' + str(tmp_lat) +
+                              '), PlaceID count=' + str(tmp_count))
 
             if tmp_lat < self.northeast_lat:  # 判斷是否超出 最東 緯度
                 if tmp_lng < self.northeast_lng:  # 判斷是否超出 最北 經度
@@ -131,14 +130,13 @@ class Finder:
                 else:  # tmp_lng > northeast_lng 超出 最北 經度
                     tmp_lng = self.start_lng  # 恢復起始的 經度(初始化)
                     tmp_lat = tmp_lat + self._coord_moving
-            else:  # tmp_lat >= northeast_lat 超出 最東 緯度
+            else:  # tmp_lat >= northeast_lat 超出 最東_緯度, 結束search
                 self.place_id_count = tmp_count
                 print('Search END')
                 return self.place_id_count, self.place_id_str.split('\n')
-                break  # 結束search
 
     def write_to_txt(self, file_name):
-        fileObject = open('./'+file_name+'.txt', 'w')
+        fileObject = open('./' + file_name + '.txt', 'w')
         fileObject.write(self.place_id_str)
         fileObject.close()
         print('Write END')
